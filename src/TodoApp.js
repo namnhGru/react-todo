@@ -1,12 +1,30 @@
 import React, { useState, useEffect } from "react";
-const todoStyle = {
-    color: 'red',
-    textDecoration: "line-through"
-}
+import TodoList from "./components/TodoList"
+import SettingModal from "./components/SettingModal";
 
 export default function TodoApp() {
-    const [todoList, setTodoList] = useState([])
+    const lsSoe = localStorage.getItem("soe")
+    const initTodoList = localStorage.getItem("todolist")
+    const [soe, setSoe] = useState( !!lsSoe ? JSON.parse(lsSoe) : false)
+    const [showSetting, setShowSetting] = useState(false)
+    const [todoList, setTodoList] = useState( soe && !!initTodoList? JSON.parse(initTodoList) : [])
     const [newTodo, setNewTodo] = useState('')
+
+    useEffect(() => {
+        localStorage.setItem("soe", JSON.stringify(soe))
+        localStorage.setItem("todolist", JSON.stringify(todoList))
+    })
+
+    function handleSoeChange(e) {
+        let soeChange = e.target.checked
+        setSoe(soeChange)
+        localStorage.setItem("soe", JSON.stringify(soeChange))
+        if (e.target.checked) {
+            localStorage.setItem("todolist", JSON.stringify(todoList))
+        } else {
+            localStorage.setItem("todolist", JSON.stringify([]))
+        }
+    }
 
     function handleSubmit() {
         const newTodoList = [...todoList, { text: newTodo, strike: false }]
@@ -20,7 +38,7 @@ export default function TodoApp() {
 
     function handleStrike(index) {
         const newTodoList = todoList.reduce((acc, todo, i) => {
-            const { text, strike } = todo
+            const { text } = todo
             if (index === i) {
                 acc.push({text, strike: true})
                 return acc
@@ -31,6 +49,10 @@ export default function TodoApp() {
         setTodoList(newTodoList)
     }
 
+    function handleSettingClicked() {
+        setShowSetting(!showSetting)
+    }
+
     return (
         <div>
             <p>Todo List</p>
@@ -39,25 +61,11 @@ export default function TodoApp() {
                 <button>Submit</button>
             </form>
             <TodoList todoList={todoList} handleDelete={handleDelete} handleStrike={handleStrike}></TodoList>
+            <button onClick={handleSettingClicked}>Setting</button>
+            {
+             !!showSetting ? <SettingModal todoList={todoList} handleSoeChange={handleSoeChange} soe={soe}></SettingModal> : null
+            }
         </div>
     )
 }
 
-function TodoList(props) {
-    if (props.todoList.length) {
-        return (
-            <ul>
-                {props.todoList.map((todo, i) => (
-                    <li key={i} style={todo.strike ? todoStyle : null}>
-                        <button onClick={() => props.handleDelete(i)}>X</button>
-                        <button onClick={() => props.handleStrike(i)}>Strike</button>
-                        {todo.text}
-                    </li>
-
-                ))}
-            </ul>
-        )
-    } else {
-        return <p>Nothing to show</p>
-    }
-}
