@@ -3,28 +3,25 @@ import TodoList from "./components/TodoList"
 import SettingModal from "./components/SettingModal";
 
 export default function TodoApp() {
-    const lsSoe = localStorage.getItem("soe")
-    const initTodoList = localStorage.getItem("todolist")
-    const [soe, setSoe] = useState( !!lsSoe ? JSON.parse(lsSoe) : false)
+    const [soe, setSoe] = useState(null)
     const [showSetting, setShowSetting] = useState(false)
-    const [todoList, setTodoList] = useState( soe && !!initTodoList? JSON.parse(initTodoList) : [])
+    const [todoList, setTodoList] = useState([])
     const [newTodo, setNewTodo] = useState('')
 
+    //componentDidMount
+    // Bài học: luôn luôn init state bằng giá trị mặc định, sau đó fetch khi mount thì sẽ tốt hơn
+    useEffect(() => {
+        const lsSoe = JSON.parse(localStorage.getItem("soe"))
+        const initTodoList = JSON.parse(localStorage.getItem("todolist"))
+        setSoe(!!lsSoe ? lsSoe : false)    
+        setTodoList(!!lsSoe && initTodoList ? initTodoList : [])
+    }, [])
+
+    //componentDidUpdate
     useEffect(() => {
         localStorage.setItem("soe", JSON.stringify(soe))
         localStorage.setItem("todolist", JSON.stringify(todoList))
-    })
-
-    function handleSoeChange(e) {
-        let soeChange = e.target.checked
-        setSoe(soeChange)
-        localStorage.setItem("soe", JSON.stringify(soeChange))
-        if (e.target.checked) {
-            localStorage.setItem("todolist", JSON.stringify(todoList))
-        } else {
-            localStorage.setItem("todolist", JSON.stringify([]))
-        }
-    }
+    },[soe, todoList])
 
     function handleSubmit() {
         const newTodoList = [...todoList, { text: newTodo, strike: false }]
@@ -53,9 +50,20 @@ export default function TodoApp() {
         setShowSetting(!showSetting)
     }
 
+    function handleSoeChange(e) {
+        let soeChange = e.target.checked
+        setSoe(soeChange)
+        localStorage.setItem("soe", JSON.stringify(soeChange))
+        if (e.target.checked) {
+            localStorage.setItem("todolist", JSON.stringify(todoList))
+        } else {
+            localStorage.setItem("todolist", JSON.stringify([]))
+        }
+    }
+
     return (
         <div>
-            <p>Todo List</p>
+            <p>Todo</p>
             <form onSubmit={handleSubmit}>
                 <input type="text" placeholder="New todo" onChange={e => setNewTodo(e.target.value)}/>
                 <button>Submit</button>
