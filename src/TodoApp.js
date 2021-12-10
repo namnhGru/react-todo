@@ -54,12 +54,12 @@ export default function TodoApp() {
     }
 
     return (
-        <div className="pt-10 grid grid-cols-3 gap-1">
+        <div className="pt-10 grid grid-cols-3 gap-1 bgtext before:bg-cLightA">
             <div className="pl-36 col-span-2 grid grid-rows-2">
                 <div className="row-span-1">
-                    <p className="font-sans text-18xl h-80">Todo</p>
-                    <form className="mt-24 h-20 flex-row flex" onSubmit={handleSubmit}>
-                        <div><input className="h-full w-168 border-2 rounded-full border-cDarkC pl-8 tExt45xl font-light" type="text" placeholder="What should you do today?" onChange={e => setNewTodo(e.target.value)}/></div>
+                    <p className="font-sans text-18xl h-80 ">Todo.</p>
+                    <form className="mt-20 h-20 flex-row flex" onSubmit={handleSubmit}>
+                        <div><input className="h-full w-168 border-2 rounded-full border-cDarkC pl-8 tExt45xl font-light bg-red-200" type="text" placeholder="What should you do today?" onChange={e => setNewTodo(e.target.value)}/></div>
                         <div><button className="ml-3.5 h-full w-28 border-2 rounded-full text-cLightA bg-cDarkA">Submit</button></div>
                     </form>
                 </div>
@@ -67,9 +67,9 @@ export default function TodoApp() {
                     <TodoList todoList={todoList} handleDelete={handleDelete} handleStrike={handleStrike}></TodoList>
                 </div>
             </div>
-            <div className="col-span-1">
-                <div>
-                    <button onClick={handleSettingClicked}>Setting</button>
+            <div className="col-span-1 relative">
+                <div className="absolute right-36 top-0 ">
+                    <button className="border-2 rounded-full bg-black text-cLightA h-20 w-28" onClick={handleSettingClicked}>Setting</button>
                 </div>
                 {
                 !!showSetting ? <SettingModal className="row-span-1" todoList={todoList} handleSoeChange={e => setSoe(e.target.checked)} soe={soe}></SettingModal> : null

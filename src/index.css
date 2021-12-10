@@ -10,4 +10,18 @@
     .tExt45xl::placeholder {
        font-size: 41.89px;
     }
+    .bgtext {
+        position: relative;
+    }
+    .bgtext::after {
+        margin: 0 150px 50px 0;
+        font-size: 350.11px;
+        content: "Today";
+        position: absolute;
+        color: #1f1f1f;
+        opacity: 0.1;
+        bottom: 0;
+        right: 0;
+        z-index: -1;
+    }
   }
