@@ -3,3 +3,11 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+    .tExt45xl {
+       font-size: 41.89px;
+    }
+    .tExt45xl::placeholder {
+       font-size: 41.89px;
+    }
+  }

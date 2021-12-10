@@ -27,6 +27,8 @@ export default function TodoApp() {
         e.preventDefault()
         const newTodoList = [...todoList, { text: newTodo, strike: false }]
         setTodoList(newTodoList) 
+        e.target.reset()
+        setNewTodo('')
     }
 
     function handleDelete(index) {
@@ -52,17 +54,27 @@ export default function TodoApp() {
     }
 
     return (
-        <div>
-            <p className="font-bold pl-6">Todo</p>
-            <form onSubmit={handleSubmit}>
-                <input type="text" placeholder="New todo" onChange={e => setNewTodo(e.target.value)}/>
-                <button>Submit</button>
-            </form>
-            <TodoList todoList={todoList} handleDelete={handleDelete} handleStrike={handleStrike}></TodoList>
-            <button onClick={handleSettingClicked}>Setting</button>
-            {
-             !!showSetting ? <SettingModal todoList={todoList} handleSoeChange={e => setSoe(e.target.checked)} soe={soe}></SettingModal> : null
-            }
+        <div className="pt-10 grid grid-cols-3 gap-1">
+            <div className="pl-36 col-span-2 grid grid-rows-2">
+                <div className="row-span-1">
+                    <p className="font-sans text-18xl h-80">Todo</p>
+                    <form className="mt-24 h-20 flex-row flex" onSubmit={handleSubmit}>
+                        <div><input className="h-full w-168 border-2 rounded-full border-cDarkC pl-8 tExt45xl font-light" type="text" placeholder="What should you do today?" onChange={e => setNewTodo(e.target.value)}/></div>
+                        <div><button className="ml-3.5 h-full w-28 border-2 rounded-full text-cLightA bg-cDarkA">Submit</button></div>
+                    </form>
+                </div>
+                <div className="row-span-1 mt-14">
+                    <TodoList todoList={todoList} handleDelete={handleDelete} handleStrike={handleStrike}></TodoList>
+                </div>
+            </div>
+            <div className="col-span-1">
+                <div>
+                    <button onClick={handleSettingClicked}>Setting</button>
+                </div>
+                {
+                !!showSetting ? <SettingModal className="row-span-1" todoList={todoList} handleSoeChange={e => setSoe(e.target.checked)} soe={soe}></SettingModal> : null
+                }
+            </div>
         </div>
     )
 }
