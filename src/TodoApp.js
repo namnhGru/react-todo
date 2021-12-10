@@ -23,7 +23,8 @@ export default function TodoApp() {
         localStorage.setItem("todolist", JSON.stringify(todoList))
     },[soe, todoList])
 
-    function handleSubmit() {
+    function handleSubmit(e) {
+        e.preventDefault()
         const newTodoList = [...todoList, { text: newTodo, strike: false }]
         setTodoList(newTodoList) 
     }
@@ -50,20 +51,9 @@ export default function TodoApp() {
         setShowSetting(!showSetting)
     }
 
-    function handleSoeChange(e) {
-        let soeChange = e.target.checked
-        setSoe(soeChange)
-        localStorage.setItem("soe", JSON.stringify(soeChange))
-        if (e.target.checked) {
-            localStorage.setItem("todolist", JSON.stringify(todoList))
-        } else {
-            localStorage.setItem("todolist", JSON.stringify([]))
-        }
-    }
-
     return (
         <div>
-            <p>Todo</p>
+            <p className="font-bold pl-6">Todo</p>
             <form onSubmit={handleSubmit}>
                 <input type="text" placeholder="New todo" onChange={e => setNewTodo(e.target.value)}/>
                 <button>Submit</button>
@@ -71,7 +61,7 @@ export default function TodoApp() {
             <TodoList todoList={todoList} handleDelete={handleDelete} handleStrike={handleStrike}></TodoList>
             <button onClick={handleSettingClicked}>Setting</button>
             {
-             !!showSetting ? <SettingModal todoList={todoList} handleSoeChange={handleSoeChange} soe={soe}></SettingModal> : null
+             !!showSetting ? <SettingModal todoList={todoList} handleSoeChange={e => setSoe(e.target.checked)} soe={soe}></SettingModal> : null
             }
         </div>
     )
