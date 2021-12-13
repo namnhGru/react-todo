@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import TodoList from "./components/TodoList"
 import SettingModal from "./components/SettingModal";
+import add from "./assets/add.png"
+import settings from "./assets/settings.png"
 
 export default function TodoApp() {
     const [soe, setSoe] = useState(null)
@@ -54,13 +56,13 @@ export default function TodoApp() {
     }
 
     return (
-        <div className="pt-10 grid grid-cols-3 gap-1 bgtext before:bg-cLightA">
+        <div className="font-google pt-10 grid grid-cols-3 gap-1 bgtext before:bg-cDarkC">
             <div className="pl-36 col-span-2 grid grid-rows-2">
                 <div className="row-span-1">
-                    <p className="font-sans text-18xl h-80 ">Todo.</p>
+                    <p className="text-18xl h-80 ">Todo.</p>
                     <form className="mt-20 h-20 flex-row flex" onSubmit={handleSubmit}>
-                        <div><input className="h-full w-168 border-2 rounded-full border-cDarkC pl-8 tExt45xl font-light bg-red-200" type="text" placeholder="What should you do today?" onChange={e => setNewTodo(e.target.value)}/></div>
-                        <div><button className="ml-3.5 h-full w-28 border-2 rounded-full text-cLightA bg-cDarkA">Submit</button></div>
+                        <div><input className="h-full w-168 border-2 rounded-full border-cDarkC pl-8 tExt45xl font-light bg-white" type="text" placeholder="What should you do today?" onChange={e => setNewTodo(e.target.value)}/></div>
+                        <div><button className="flex ml-3.5 h-full w-28 border-2 border-cDarkA rounded-full bg-white"><img className="w-14 h-14 m-auto" src={add}></img></button></div>
                     </form>
                 </div>
                 <div className="row-span-1 mt-14">
@@ -69,7 +71,9 @@ export default function TodoApp() {
             </div>
             <div className="col-span-1 relative">
                 <div className="absolute right-36 top-0 ">
-                    <button className="border-2 rounded-full bg-black text-cLightA h-20 w-28" onClick={handleSettingClicked}>Setting</button>
+                    <button className="flex border-2 rounded-full bg-white text-cDarkA h-20 w-28 border-cDarkA" onClick={handleSettingClicked}>
+                        <img className="h-14 m-auto w-14" src={settings}></img>
+                    </button>
                 </div>
                 {
                 !!showSetting ? <SettingModal className="row-span-1" todoList={todoList} handleSoeChange={e => setSoe(e.target.checked)} soe={soe}></SettingModal> : null

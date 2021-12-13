@@ -3,6 +3,9 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
+      fontFamily: {
+        google: ['Open Sans', 'sans-serif']
+      },
       colors: {
         "cLightA": "#F1F1F1",
         "cLightB": "#EBEBEB",
