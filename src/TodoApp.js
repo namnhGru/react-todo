@@ -61,7 +61,7 @@ export default function TodoApp() {
                 <div className="row-span-1">
                     <p className="text-18xl h-80 ">Todo.</p>
                     <form className="mt-20 h-20 flex-row flex" onSubmit={handleSubmit}>
-                        <div><input className="h-full w-168 border-2 rounded-full border-cDarkC pl-8 tExt45xl font-light bg-white" type="text" placeholder="What should you do today?" onChange={e => setNewTodo(e.target.value)}/></div>
+                        <div><input className="h-full w-168 border-2 rounded-full border-cDarkC pl-8 tExt45xl font-light bg-white" required min="1" max="25" type="text" placeholder="What should you do today?" onChange={e => setNewTodo(e.target.value)}/></div>
                         <div><button className="flex ml-3.5 h-full w-28 border-2 border-cDarkA rounded-full bg-white"><img className="w-14 h-14 m-auto" src={add}></img></button></div>
                     </form>
                 </div>
